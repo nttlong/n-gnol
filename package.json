@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/nttlong/n-gnol/issues"
   },
-  "homepage": "https://github.com/nttlong/n-gnol#readme"
+  "homepage": "https://github.com/nttlong/n-gnol#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
 }
