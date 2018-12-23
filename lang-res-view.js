@@ -124,10 +124,10 @@ function getViewRes(pathToApp, lang, app,view, key, value) {
         sync.sync(createViewLang, [pathToApp, lang,view]);
         cache[lang][app][view] = {};
     }
-    if (!cache[lang][app][key]) {
+    if (!cache[lang][app][view][key]) {
         sync.sync(createAppResLang, [pathToApp, lang, app,view, key, value]);
     }
-    return cache[lang][app][key];
+    return cachecache[lang][app][view][key];
 }
 
 module.exports = getViewRes
