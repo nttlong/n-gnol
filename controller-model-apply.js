@@ -11,7 +11,7 @@ function getServerInfo(sender){
     }else {
         ret.absUrl = req.protocol + "://" + req.get('host');
     }
-    if (sender.app.hostDir!==undefined){
+    if (sender.app.hostDir!==null){
         ret.appUrl = ret.absUrl + "/" + sender.app.hostDir;
     }
     else {
