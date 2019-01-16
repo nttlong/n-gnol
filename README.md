@@ -3,7 +3,6 @@ How to start?
 ===============
 
 .. code-block::
-
     var apps=require("n-gnol");
     apps.settings.hostDir=null;
     apps.settings.workingDir=__dirname;
