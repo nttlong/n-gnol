@@ -33,6 +33,9 @@ module.exports = function () {
         if (appSets.authenticate === undefined) {
             throw (new Error(`"authenticate" was not found in ${appSettingPath}`));
         }
+        if(appSets.authenticate.length<4){
+            throw (new Error(`"authenticate" in ${appSettingPath} must have 4 params and return true or false`));
+        }
         if (appSets.middleWare === undefined) {
             throw (new Error(`"middleWare" was not found in ${appSettingPath}`));
         }
@@ -73,11 +76,24 @@ module.exports = function () {
         if (stat.isDirectory()) {
             var controllerDir = path.sep.join(appDir, "controllers");
             var controllerDirSubDirs = fs.readdirSync(controllerDir);
+            if(controllerDirSubDirs.length==0){
+                throw(new Error(`${controllerDir} can not be empty`));
+            }
             for (var j = 0; j < controllerDirSubDirs.length; j++) {
                 var controllerFile = path.join(controllerDir, controllerDirSubDirs[j]);
 
                 controllersCache[controllerFile] = require(controllerFile);
                 var config = controllersCache[controllerFile];
+                if((config.url===undefined)||(typeof config.url!="string")){
+                    throw (new Error(`url was not found or incorrect type in "${controllerFile}"`))
+                }
+                if((config.template===undefined)||(typeof config.template!="string")){
+                    throw (new Error(`template was not found or incorrect type in "${controllerFile}"`))
+                }
+                if((config.actions===undefined)||(typeof config.actions!="object")){
+                    throw (new Error(`actions was not found or incorrect type in "${controllerFile}"`))
+                }
+
                 if (appSettings.hostDir === undefined) {
                     throw (new Error(`"hostDir" was not found in "${appDir}.settings.js"`))
                 }
