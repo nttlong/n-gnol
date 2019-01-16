@@ -47,7 +47,7 @@ module.exports = function () {
             appSettings.hostDir = dirs[i];
         }
         else if (appSettings.hostDir === "") {
-            appSettings.hostDir = undefined;
+            appSettings.hostDir = null;
         }
         var AppStaticDir = path.sep.join(appDir, appSettings.staticDir);
         if (settings.hostDir != null) {
