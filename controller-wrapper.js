@@ -62,6 +62,9 @@ class ControllerWrapper {
 
     }
     execMethod(methodOfActions, req, res, next) {
+        if(methodOfActions == undefined){
+            throw (new Error(`it looks like you forgot declare any method in ${this.fileName}`))
+        }
         if (methodOfActions.privilege === undefined) {
             throw (new Error(`The privilege  of action 'get' in ${this.fileName} was not found`))
         }
@@ -100,7 +103,7 @@ class ControllerWrapper {
     }
     apply() {
         if (this.controller.actions === undefined) {
-            this.controller.actions.get = (sender, req, res) => {
+            this.controller.actions.get = (sender, req, res,next) => {
 
             }
         }
@@ -132,6 +135,19 @@ class ControllerWrapper {
         }
         else {
             if (this.settings.hostDir === null) {
+                if(me.controller.actions.get===undefined){
+                    throw(new Error(`It looks like you forgot declare get method in ${me.fileName}`));
+                }
+                if(me.controller.actions.get.constructor.name!="actionWrapper"){
+                    throw(new Error(`the method ${me.controller.actions.get.name} in '${me.fileName}' must be 'actionWrapper'\r\n
+                    How to define actionWrapper? Use below code\r\n
+                    var apps = require("n-gnol");\r\n
+                    actions: {\t\n
+                        get: apps.action("public", (sender) => {\r\n
+                            return new apps.view(sender, {});\n\n
+                        })
+                    }`));
+                }
                 this.settings.app.get("/" + this.url, (req, res,next) => {
                     me.execMethod(me.controller.actions.get, req, res, next);
                 });
