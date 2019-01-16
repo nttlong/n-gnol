@@ -132,7 +132,7 @@ class ControllerWrapper {
         }
         else {
             if (this.settings.hostDir === null) {
-                this.settings.app.get("/" + this.url, (req, res) => {
+                this.settings.app.get("/" + this.url, (req, res,next) => {
                     me.execMethod(me.controller.actions.get, req, res, next);
                 });
                 if (me.controller.actions.post !== undefined) {
